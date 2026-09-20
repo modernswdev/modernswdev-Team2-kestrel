@@ -10,12 +10,10 @@ Simple Node.js app with a minimal React-like front end and cookie-based login.
 ## Tech Stack
 
 <!-- TODO: Replace with tech stack once project goal is decided -->
-- Node.js 18
-- Express 4.x
-- cookie-parser
-- pg (node-postgres)
-- Minimal vanilla front-end JavaScript (no bundler required)
-- Docker / docker-compose
+- Python
+- Flask
+- SQLite
+- HTML/JS/CSS
 
 ## Project Idea
 
