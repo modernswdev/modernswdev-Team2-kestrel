@@ -1,5 +1,4 @@
-# Team 2 Project - Codename "Pawlink"
-Simple Node.js app with a minimal React-like front end and cookie-based login.
+# Team 2 Project - "PawLink"
 
 ## Team Members
 - Daniel Trimble (dstrimble)
