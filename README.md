@@ -4,7 +4,7 @@ Simple Node.js app with a minimal React-like front end and cookie-based login.
 ## Team Members
 - Daniel Trimble (dstrimble)
 - Billy Spann (billyspann)
-- Brandon Wilson 
+- Brandon Wilson (brandowun)
 - Elizabeth Lee (elizlee1)
 - Mia Diaz Cruz (miadc0117)
 - Daniel Cronin (dcronin05)
