@@ -7,6 +7,7 @@
 - Elizabeth Lee (elizlee1)
 - Mia Diaz Cruz (miadc0117)
 - Daniel Cronin (dcronin05)
+- Stefany Roman (stefanyromann)
 
 ## Tech Stack
 - Python
