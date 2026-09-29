@@ -26,7 +26,7 @@ Our mission is to foster real-world connections for pets and their owners by sim
 
 
 
-**So based on todays meeting... What do you guys thinks??**
+*So based on todays meeting... What do you guys thinks??*
 Pet owners create profiles and find compatible dogs for park meetups.
 We don't need to build a huge social network.
 
