@@ -69,6 +69,18 @@ PawLink takes the guesswork out of dog meetups by letting you pre-screen playmat
 Compatibility Filtering - Matches potential partners by explicit criteria: location, size, energy levels, and temperament.
 
 Safe Pre-Meeting Communication - Matched owners use messaging to chat, share behavioral nuances, and finalize boundaries safely before committing to an in-person, 1-on-1 meeting.
+
+
+## Key Features
+
+- **Account registration**: sign up with an email and password (#14)
+- **Log in and log out** (#24)
+- **Dog profiles**: name, age, sex, size, energy level, and temperament (#16)
+- **Compatibility matching**: browse dogs ranked by how well they match yours (#26)
+- **Messaging**: talk with a match before meeting (#28)
+- **Park meetups**: request a meetup and accept or decline requests (#27)
+- **Blocking**: block a match (#29)
+
 ## Team Workflow
 
 ### Definition of Done
