@@ -18,9 +18,9 @@ At least 3, each checkable by someone who did not write this.
 Describe what the software must DO — not how the change gets reviewed.
 -->
 
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ]
+- [ ]
+- [ ]
 
 ## Notes
 
