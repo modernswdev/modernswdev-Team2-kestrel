@@ -93,3 +93,35 @@ Branch names start with the prefix and a short description, e.g.
 | `feature/` | New capability | `feature/user-login` |
 | `bug/` | Defect fix | `bug/remove-extra-description` |
 | `docs/` | Documentation only | `docs/add-roles-file` |
+
+
+### User Story #1: Create a Dog Profile
+
+**User Story:** As a dog owner, I want to create a profile for my dog with information such as size, energy level, and temperament so that other owners can understand my dog's traits.
+
+**DoD:** The owner can enter the required dog information, save the profile, and view the saved information. The profile information is stored in the database.
+
+### User Story #2: Find Compatible Dogs
+
+**User Story:** As a dog owner, I want to filter local dogs by size, location, energy level, and temperament so that I can find compatible playmates.
+
+**DoD:** The system filters the dog profile list based on the selected parameters and safely handles empty or zero-result searches without interface errors.
+
+### User Story #3: View Potential Matches
+
+**User Story:** As a dog owner, I want to view potential dog matches ranked by compatibility so that I can find dogs that may be a good match for my dog.
+
+**DoD:** The system displays potential matches based on the available dog profile information and shows a compatibility score or ranking for each match.
+
+### User Story #4: Message a Match
+
+**User Story:** As a matched dog owner, I want to message another owner before meeting so that we can discuss the meetup location and make sure our dogs are a good fit.
+
+**DoD:** Matched owners can send and receive text-based messages through the application.
+
+### User Story #5: Request a Park Meetup
+
+**User Story:** As a dog owner, I want to request a park meetup with another matched dog owner so that we can arrange a time and location for our dogs to socialize.
+
+**DoD:** An owner can send a meetup request with a proposed time and location, and the other owner can accept or decline the request.
+
