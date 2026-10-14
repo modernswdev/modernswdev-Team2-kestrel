@@ -1,0 +1,25 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS dogs;
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP    
+);
+
+CREATE TABLE dogs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    age INTEGER,
+    sex TEXT,
+    size TEXT NOT NULL,
+    energy_level TEXT NOT NULL,
+    temperament TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner_id) REFERENCES users (id)
+);
+
+
+  
