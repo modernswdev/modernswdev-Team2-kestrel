@@ -21,6 +21,3 @@ CREATE TABLE dogs (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (owner_id) REFERENCES users (id)
 );
-
-
-  
