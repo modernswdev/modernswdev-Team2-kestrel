@@ -36,5 +36,8 @@ def test_empty_password(client, app):
     assert b"Password is required." in response.data
     assert user_in_db(app, "test@example.com") is False
 
-# TODO: Add test for empty email
-
+# TODO: Add test for empty email. It can follow the same pattern as 
+# `test_empty_password` above, but instead of passing an empty password 
+# an empty email should be passed. Then assert that the error message 
+# contains "Email is required." and that no users with an empty email 
+# are in the database.
