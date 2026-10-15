@@ -17,27 +17,27 @@ bp = Blueprint(
 def register():
     if request.method == 'POST':
         email = request.form['email']
-        name = request.form['name']
+        username = email.split('@')[0]
         password = request.form['password']
         db = get_db()
         error = None
 
         if not email:
             error = 'Email is required.'
-        elif not name:
-            error = 'Name is required.'
         elif not password:
             error = 'Password is required.'
+        elif len(password) < 8:
+            error = 'Password must be at least 8 characters long.'
 
         if error is None:
             try:
                 db.execute(
-                    'INSERT INTO users (email, name, password_hash) VALUES (?, ?, ?)',
-                    (email, name, generate_password_hash(password))
+                    'INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)',
+                    (email, username, generate_password_hash(password))
                 )
                 db.commit()
             except db.IntegrityError:
-                error = f'User {email} is already registered.'
+                error = f'Registration failed.'
             else:
                 return redirect(url_for('auth.login'))
 
@@ -82,6 +82,7 @@ def load_logged_in_user():
 @bp.route('/logout')
 def logout():
     session.clear()
+    flash('You have been logged out.')
     return redirect(url_for('index'))
 
 
