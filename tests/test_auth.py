@@ -36,8 +36,20 @@ def test_empty_password(client, app):
     assert b"Password is required." in response.data
     assert user_in_db(app, "test@example.com") is False
 
-# TODO: Add test for empty email. It can follow the same pattern as 
-# `test_empty_password` above, but instead of passing an empty password 
-# an empty email should be passed. Then assert that the error message 
-# contains "Email is required." and that no users with an empty email 
-# are in the database.
+def test_missing_email_validation(client):
+    # Attempt to register with an empty email address
+    blank_email_data = {
+        'email': '',
+        'password': 'SecurePassword123!'
+    }
+    response = client.post('/auth/register', data=blank_email_data)
+    assert b'Email is required.' in response.data
+
+def test_duplicate_email_registration_fails(client, app):
+    # Attempt to register the exact same email address twice
+    first_signup = {'email': 'duplicate@ualr.edu', 'password': 'SecurePassword123!'}
+    second_signup = {'email': 'duplicate@ualr.edu', 'password': 'DifferentPassword456!'}
+    client.post('/auth/register', data=first_signup)
+    response = client.post('/auth/register', data=second_signup)
+    assert b'Registration failed.' in response.data
+
