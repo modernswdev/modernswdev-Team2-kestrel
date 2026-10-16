@@ -2,10 +2,20 @@ import pytest
 import sqlite3
 from app.db import get_db
 
-# TODO: Add test of foreign key enforcement. Copy the pattern from 
-# `test_duplicate_email_is_rejected` below, but insert into dogs 
-# with a non-existent owner_id and assert that "FOREIGN KEY constraint 
-# failed" is in the exception message.
+
+def test_dog_owner_foreign_key_is_enforced(app):
+    with app.app_context():
+        db = get_db()
+
+        with pytest.raises(sqlite3.IntegrityError) as e:
+            db.execute(
+                "INSERT INTO dogs "
+                "(owner_id, name, age, sex, size, energy_level, temperament) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (999, "Test Dog", 3, "Male", "Medium", "High", "Friendly")
+            )
+
+        assert "FOREIGN KEY constraint failed" in str(e.value)
 
 def test_duplicate_email_is_rejected(app):
     with app.app_context():
