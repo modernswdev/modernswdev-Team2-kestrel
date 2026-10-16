@@ -1,0 +1,41 @@
+import pytest
+import sqlite3
+from app.db import get_db
+
+# TODO: Add test of foreign key enforcement. Copy the pattern from 
+# `test_duplicate_email_is_rejected` below, but insert into dogs 
+# with a non-existent owner_id and assert that "FOREIGN KEY constraint 
+# failed" is in the exception message.
+
+def test_duplicate_email_is_rejected(app):
+    with app.app_context():
+        db = get_db()
+  
+        with pytest.raises(sqlite3.IntegrityError) as e:
+            db.execute(
+                "INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)",
+                ("test@test.com", "test", "testpassword")
+            )
+        assert "UNIQUE constraint failed" in str(e.value)
+
+def test_get_close_db(app):
+    with app.app_context():
+        db = get_db()
+        assert db is get_db()
+
+    with pytest.raises(sqlite3.ProgrammingError) as e:
+        db.execute("SELECT 1")
+
+    assert 'closed' in str(e.value)
+
+def test_init_db_command(runner, monkeypatch):
+    class Recorder:
+        called = False
+
+    def fake_init_db():
+        Recorder.called = True
+
+    monkeypatch.setattr('app.db.init_db', fake_init_db)
+    result = runner.invoke(args=['init-db'])
+    assert 'Initialized' in result.output
+    assert Recorder.called
