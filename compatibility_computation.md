@@ -14,11 +14,11 @@ This file is an open sandbox area for brainstorming the math and logic rules for
 *   **[EL]:** To ensure database consistency and clean math evaluation, we will enforce explicit 1–5 option scales for our traits:
 
 ### 📐 Size Scale
-*   **1:** X-Small
-*   **2:** Small
-*   **3:** Medium
-*   **4:** Large
-*   **5:** X-Large
+*   **1:** X-Small (< 10lbs)
+*   **2:** Small (11lbs - 25lbs)
+*   **3:** Medium (26lbs - 60lbs)
+*   **4:** Large (61lbs - 90lbs)
+*   **5:** X-Large (> 91lbs)
 
 ### 🎭 Temperament Scale
 *   **1 - Clingy:** Highly anxious or timid; sticks like velcro to handler, overwhelmed easily by other dogs.
@@ -39,6 +39,7 @@ This file is an open sandbox area for brainstorming the math and logic rules for
 *   **[EL]:** Distance will be evaluated by querying SQLite for coordinates and computing center-to-center raw mileage using external mapping libraries.
               I researched the best way to handle the distance math, and an AI assistant helped me verify that **`geopy`** is the industry-standard library for this. Instead of writing custom geometry formulas, we can use `geopy.distance.geodesic` to automatically compute mileage.
               Requirement: We will need to add `geopy` to our project's `requirements.txt` file so everyone can run `pip install geopy`.
+*   **[EL]:** **User Input Requirement Update:** Users will provide a standard 5-digit ZIP code in the profile creation UI. The backend engine will map these inputs to coordinate pairs before evaluating proximity.
 *   **[EL]:** Calculated raw distances will map directly into 5 distinct geographic tiers:
     *   **Tier 1:** 0–15 miles
     *   **Tier 2:** 16–30 miles
