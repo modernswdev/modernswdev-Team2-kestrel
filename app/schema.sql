@@ -13,11 +13,12 @@ CREATE TABLE dogs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     owner_id INTEGER NOT NULL,
     name TEXT NOT NULL,
-    age INTEGER,
-    sex TEXT,
-    size TEXT NOT NULL,
-    energy_level TEXT NOT NULL,
-    temperament TEXT NOT NULL,
+    age INTEGER NOT NULL,
+    sex TEXT NOT NULL CHECK (sex in ('Male', 'Female')),
+    zip_code TEXT NOT NULL,
+    size INTEGER NOT NULL CHECK (size BETWEEN 1 AND 5),
+    energy_level INTEGER NOT NULL CHECK (energy_level BETWEEN 1 AND 5),
+    temperament INTEGER NOT NULL CHECK (temperament BETWEEN 1 AND 5),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (owner_id) REFERENCES users (id)
 );

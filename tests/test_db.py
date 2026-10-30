@@ -10,10 +10,10 @@ def test_dog_owner_foreign_key_is_enforced(app):
         with pytest.raises(sqlite3.IntegrityError) as e:
             db.execute(
                 "INSERT INTO dogs "
-                "(owner_id, name, age, sex, size, energy_level, temperament) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (999, "Test Dog", 3, "Male", "Medium", "High", "Friendly")
-            )
+                "(owner_id, name, age, sex, zip_code, size, energy_level, temperament) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (999, "Test Dog", 3, "Male", "72204", 3, 4, 4)
+                )
 
         assert "FOREIGN KEY constraint failed" in str(e.value)
 
