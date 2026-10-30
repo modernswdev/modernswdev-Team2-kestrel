@@ -16,7 +16,7 @@ def create_app(test_config=None):
     def service_worker():
         return send_from_directory(app.static_folder, "sw.js",
                                    mimetype="application/javascript")
-                                   
+
     if test_config is not None:
         app.config.from_mapping(test_config)
     
@@ -27,5 +27,9 @@ def create_app(test_config=None):
 
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import dogs
+    app.register_blueprint(dogs.bp)
+
 
     return app
