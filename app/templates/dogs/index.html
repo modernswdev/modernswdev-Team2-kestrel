@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}My Dogs{% endblock %}</h1>
+  <a href="{{ url_for('dogs.create') }}">Add a dog</a>
+{% endblock %}
+
+{% block content %}
+  {% for dog in dogs %}
+    <article>
+      <h2>{{ dog['name'] }}</h2>
+      <p>{{ dog['age'] }} yrs · {{ dog['sex'] }} · ZIP {{ dog['zip_code'] }}</p>
+      <p>Size: {{ sizes[dog['size']] }}</p>
+      <p>Energy: {{ energy_levels[dog['energy_level']] }}</p>
+      <p>Temperament: {{ temperaments[dog['temperament']] }}</p>
+    </article>
+  {% else %}
+    <p>No dogs yet. <a href="{{ url_for('dogs.create') }}">Add your first pup.</a></p>
+  {% endfor %}
+{% endblock %}

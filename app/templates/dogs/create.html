@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Tell us about your pup!{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="name">Name</label>
+    <input name="name" id="name" value="{{ request.form['name'] }}" required>
+
+    <label for="age">Age</label>
+    <input type="number" name="age" id="age" min="0" value="{{ request.form['age'] }}" required>
+
+    <label for="sex">Sex</label>
+    <select name="sex" id="sex" required>
+      <option value="">Choose...</option>
+      {% for sex in sexes %}
+        <option value="{{ sex }}" {% if request.form['sex'] == sex %}selected{% endif %}>{{ sex }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="zip_code">ZIP code</label>
+    <input name="zip_code" id="zip_code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5"
+           value="{{ request.form['zip_code'] }}" required>
+
+    {% for field, label, scale in [('size', 'Size', sizes),
+                                   ('energy_level', 'Energy level', energy_levels),
+                                   ('temperament', 'Temperament', temperaments)] %}
+      <label for="{{ field }}">{{ label }}</label>
+      <select name="{{ field }}" id="{{ field }}" required>
+        <option value="">Choose...</option>
+        {% for value, text in scale.items() %}
+          <option value="{{ value }}" {% if request.form[field] == value|string %}selected{% endif %}>{{ text }}</option>
+        {% endfor %}
+      </select>
+    {% endfor %}
+
+    <input type="submit" value="Create Profile">
+  </form>
+{% endblock %}
