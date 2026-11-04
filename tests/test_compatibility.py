@@ -1,35 +1,51 @@
-# test_compatibility.py
+# tests/test_compatibility.py
 import pytest
+from app.compatibility import score
 
-# Test the core math engine parameters defined by [EL] in the scratchpad
-def calculate_test_score(t1, t2, size1, size2, energy1, energy2, is_local_commute, is_long_distance, is_fallback):
-    temp_diff = abs(t1 - t2)
-    energy_diff = abs(energy1 - energy2)
-    size_diff = abs(size1 - size2)
-    
-    penalty = (temp_diff * 3) + (energy_diff * 2) + (size_diff * 1)
-    base_score = 100.0 - ((penalty / 24.0) * 100.0)
-    
-    if is_fallback or is_long_distance:
-        divisor = 3.0
-    elif is_local_commute:
-        divisor = 1.5
-    else:
-        divisor = 1.0
-        
-    return round(base_score / divisor, 2)
+# We define standard dog profiles to pass into our function
+# Your teammate noted the app stores these as 1-5 integers
+dog_buddy = {'temperament': 4, 'energy_level': 4, 'size': 3}
+dog_luna = {'temperament': 3, 'energy_level': 3, 'size': 3}
 
 def test_case_1_local_match():
-    # Buddy vs Luna Local Drive Commute (~22 miles)
-    score = calculate_test_score(4, 3, 3, 3, 4, 3, is_local_commute=True, is_long_distance=False, is_fallback=False)
-    assert score == 52.78
+    # Local boundary check (e.g., 10 miles is <= 15 miles)
+    # Math: Diff penalty = (1*3) + (1*2) + (0*1) = 5. Distance penalty = 0. Total = 5. 
+    # Max 24 - 5 = 19.0
+    result = score(dog_buddy, dog_luna, miles=10)
+    assert result == 19.0
 
 def test_case_2_long_distance_match():
-    # Buddy vs Luna Long Distance (~130 miles)
-    score = calculate_test_score(4, 3, 3, 3, 4, 3, is_local_commute=False, is_long_distance=True, is_fallback=False)
-    assert score == 26.39
+    # Long distance check (e.g., 130 miles is > 50 miles)
+    # Math: Diff penalty = 5. Distance penalty = 3.0. Total = 8.0. 
+    # Max 24 - 8.0 = 16.0
+    result = score(dog_buddy, dog_luna, miles=130)
+    assert result == 16.0
 
 def test_case_3_fallback_invalid_zip():
-    # Fallback Handling (Missing or Invalid Coordinates)
-    score = calculate_test_score(4, 3, 3, 3, 4, 3, is_local_commute=False, is_long_distance=False, is_fallback=True)
-    assert score == 26.39
+    # Fallback Handling (Missing or Invalid Coordinates passes None)
+    # Math: Diff penalty = 5. Distance penalty = 3.0. Total = 8.0.
+    # Max 24 - 8.0 = 16.0
+    result = score(dog_buddy, dog_luna, miles=None)
+    assert result == 16.0
+
+def test_tier_boundary_local_exact():
+    # Exact upper boundary of local tier (15 miles) should have 0 distance penalty
+    result = score(dog_buddy, dog_luna, miles=15)
+    assert result == 19.0
+
+def test_tier_boundary_mid_distance_start():
+    # Just past the local boundary (16 miles) jumps into the mid-distance penalty (1.5)
+    # Max 24 - 5 (diff) - 1.5 (distance) = 17.5
+    result = score(dog_buddy, dog_luna, miles=16)
+    assert result == 17.5
+
+def test_tier_boundary_mid_distance_exact():
+    # Exact upper boundary of mid-distance tier (50 miles) should keep 1.5 distance penalty
+    result = score(dog_buddy, dog_luna, miles=50)
+    assert result == 17.5
+
+def test_tier_boundary_long_distance_start():
+    # Just past the mid-distance boundary (51 miles) jumps into the long-distance penalty (3.0)
+    # Max 24 - 5 (diff) - 3.0 (distance) = 16.0
+    result = score(dog_buddy, dog_luna, miles=51)
+    assert result == 16.0
