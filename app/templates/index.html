@@ -1,18 +1,9 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PawLink</title>
-    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}" />
-  </head>
-  <body>
-    <h1>PawLink</h1>
-    <p>Better matches, better playdates.</p>
-    <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/sw.js");
-      }
-    </script>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Home{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <p>Better matches, better playdates.</p>
+{% endblock %}

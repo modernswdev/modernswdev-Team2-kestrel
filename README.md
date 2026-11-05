@@ -5,6 +5,7 @@
 - Billy Spann (billyspann)
 - Brandon Wilson (brandowun)
 - Elizabeth Lee (elizlee1)
+   * Feature #26: Compatibility Matching (Automated Test)
 - Mia Diaz Cruz (miadc0117)
 - Daniel Cronin (dcronin05)
 - Stefany Roman (stefanyromann)
@@ -76,7 +77,7 @@ Safe Pre-Meeting Communication - Matched owners use messaging to chat, share beh
 - **Account registration**: sign up with an email and password (#14)
 - **Log in and log out** (#24)
 - **Dog profiles**: name, age, sex, size, energy level, and temperament (#16)
-- **Compatibility matching**: browse dogs ranked by how well they match yours (#26)
+- **Compatibility matching**: browse dogs ranked by how well they match yours (#26) - (Assigned to: Elizabeth)
 - **Messaging**: talk with a match before meeting (#28)
 - **Park meetups**: request a meetup and accept or decline requests (#27)
 - **Blocking**: block a match (#29)
@@ -85,9 +86,9 @@ Safe Pre-Meeting Communication - Matched owners use messaging to chat, share beh
 
 ### Definition of Done
 
-Every pull request is reviewed and approved by a team member who did not write the changes. Each pull request describes what changed and why. A pull request that implements a backlog item links to that Issue, and all acceptance criteria on the Issue are met.
+Every pull request is reviewed and approved by a team member who did not write the changes. Each pull request describes what changed and why. A pull request that implements a backlog item links to that Issue, all acceptance criteria on the Issue are met, and all tests pass (enforced by CI).
 
-This Definition of Done grows as the pipeline develops: automated tests in Module 6, CI enforcement in Module 7, and static analysis later in the course.
+This Definition of Done will grow to include static analysis in later iterations.
 
 ### Communication
 
@@ -105,3 +106,32 @@ Branch names start with the prefix and a short description, e.g.
 | `feature/` | New capability | `feature/user-login` |
 | `bug/` | Defect fix | `bug/remove-extra-description` |
 | `docs/` | Documentation only | `docs/add-roles-file` |
+
+## Development Setup
+
+Everything runs in your browser. Nothing to install on your computer.
+
+### 1. Open a Codespace
+
+On the repo page: **Code → Codespaces → Create codespace on main**.
+
+The first time takes a few minutes. It's installing everything the project needs. Wait until the terminal at the bottom says it's done.
+
+### 2. Check everything works
+
+    pytest
+
+All tests should pass. If they don't, stop and ask in Slack. It's a setup problem, not you.
+
+---
+
+**Want to see the app running?**
+
+    flask --app app init-db
+    flask --app app run --debug
+
+Click **Open in Browser** when it pops up. **Ctrl+C** stops it.
+
+**`pytest: command not found`?** Run `pip install -r requirements.txt`, then try again.
+
+**Working on your own computer instead?** You need Python 3.11+ and git. Clone the repo, run `pip install -r requirements.txt` (in a virtual environment), and the steps above work the same.
