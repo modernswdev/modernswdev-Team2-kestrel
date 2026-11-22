@@ -3,6 +3,7 @@ from flask import (
 )
 
 from app.auth import login_required
+from app.compatibility import calculate_miles, lookup_coordinates, score
 from app.db import get_db
 
 bp = Blueprint('dogs', __name__, url_prefix='/dogs')
@@ -91,4 +92,46 @@ def create():
     return render_template(
         'dogs/create.html', sexes=SEXES, sizes=SIZES,
         energy_levels=ENERGY_LEVELS, temperaments=TEMPERAMENTS
+    )
+
+
+@bp.route('/matches')
+@login_required
+def matches():
+    db = get_db()
+    my_dog = db.execute(
+        'SELECT * FROM dogs WHERE owner_id = ? ORDER BY created_at ASC LIMIT 1',
+        (g.user['id'],)
+    ).fetchone()
+
+    if my_dog is None:
+        return render_template('dogs/matches.html', has_dog=False, matches=[])
+
+    my_coords = lookup_coordinates(my_dog['zip_code'])
+    other_dogs = db.execute(
+        'SELECT * FROM dogs WHERE owner_id != ?',
+        (g.user['id'],)
+    ).fetchall()
+
+    ranked_matches = []
+    for dog in other_dogs:
+        other_coords = lookup_coordinates(dog['zip_code'])
+        miles = calculate_miles(my_coords, other_coords)
+        match_score = score(my_dog, dog, miles)
+        ranked_matches.append({
+            'dog': dog,
+            'score': match_score,
+            'miles': round(miles, 1) if miles is not None else None,
+        })
+
+    ranked_matches.sort(key=lambda m: m['score'], reverse=True)
+
+    return render_template(
+        'dogs/matches.html',
+        has_dog=True,
+        my_dog=my_dog,
+        matches=ranked_matches,
+        sizes=SIZES,
+        energy_levels=ENERGY_LEVELS,
+        temperaments=TEMPERAMENTS,
     )

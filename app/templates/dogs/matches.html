@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Compatible Matches{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% if not has_dog %}
+    <p>You need to create a dog profile before browsing matches. <a href="{{ url_for('dogs.create') }}">Create a dog profile first.</a></p>
+  {% elif matches %}
+    {% for item in matches %}
+      <article>
+        <h2>{{ item['dog']['name'] }}</h2>
+        <p>Size: {{ sizes[item['dog']['size']] }}</p>
+        <p>Energy: {{ energy_levels[item['dog']['energy_level']] }}</p>
+        <p>Temperament: {{ temperaments[item['dog']['temperament']] }}</p>
+        <p>Distance: {% if item['miles'] is not none %}{{ item['miles'] }} miles away{% else %}Unknown distance{% endif %}</p>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>No compatible dogs available right now.</p>
+  {% endif %}
+{% endblock %}
