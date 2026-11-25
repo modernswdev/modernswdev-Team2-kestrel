@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{% if show_blocked %}Blocked Matches{% else %}Matches{% endif %}{% endblock %}</h1>
+  {% if show_blocked %}
+    <a href="{{ url_for('matches.index') }}">Show matches</a>
+  {% else %}
+    <a href="{{ url_for('matches.index', show='blocked') }}">Show blocked matches</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for match in matches %}
+    <article>
+      <h2>{{ match.dog['name'] }}</h2>
+      <p>Owner: {{ match.dog['owner_name'] }} · ZIP {{ match.dog['zip_code'] }}</p>
+      <p>Compatibility: {{ '%.1f'|format(match.score) }} / 24</p>
+      {% if show_blocked %}
+        <form method="post" action="{{ url_for('matches.unblock', user_id=match.dog['owner_id']) }}">
+          <button type="submit">Unblock {{ match.dog['owner_name'] }}</button>
+        </form>
+      {% else %}
+        <form method="post" action="{{ url_for('matches.block', user_id=match.dog['owner_id']) }}">
+          <button type="submit">Block {{ match.dog['owner_name'] }}</button>
+        </form>
+      {% endif %}
+    </article>
+  {% else %}
+    {% if show_blocked %}
+      <p>You haven't blocked anyone.</p>
+    {% else %}
+      <p>No matches yet. <a href="{{ url_for('dogs.create') }}">Add a dog</a> to see compatible pups.</p>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS blocks;
 DROP TABLE IF EXISTS dogs;
 DROP TABLE IF EXISTS users;
 
@@ -21,4 +22,15 @@ CREATE TABLE dogs (
     temperament INTEGER NOT NULL CHECK (temperament BETWEEN 1 AND 5),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (owner_id) REFERENCES users (id)
+);
+
+CREATE TABLE blocks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    blocker_id INTEGER NOT NULL,
+    blocked_id INTEGER NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (blocker_id, blocked_id),
+    CHECK (blocker_id != blocked_id),
+    FOREIGN KEY (blocker_id) REFERENCES users (id),
+    FOREIGN KEY (blocked_id) REFERENCES users (id)
 );

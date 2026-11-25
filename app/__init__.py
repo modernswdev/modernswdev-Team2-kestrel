@@ -31,5 +31,8 @@ def create_app(test_config=None):
     from . import dogs
     app.register_blueprint(dogs.bp)
 
+    from . import matches
+    app.register_blueprint(matches.bp)
+
 
     return app
